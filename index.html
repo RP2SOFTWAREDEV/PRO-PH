@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pro ph</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #6a7fef;
+            --primary-dark: #3a0ca3;
+            --secondary: #3a0ca3;
+            --accent: #4895ef;
+            --accent-light: #6daaf2;
+            --light: #f8f9fa;
+            --light-transparent: rgba(248, 249, 250, 0.8);
+            --dark: #212529;
+            --dark-transparent: rgba(33, 37, 41, 0.9);
+            --success: #4cc9f0;
+            --danger: #dc3545;
+            --danger-light: #e4606d;
+            --warning: #ffc107;
+            --rounded: 16px;
+            --rounded-lg: 24px;
+            --rounded-xl: 32px;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.2);
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            min-height: 90vh;
+            background: white;
+            border-radius: var(--rounded-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .app-header {
+            padding: 16px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .app-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+        }
+        
+        .app-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            border: none;
+            border-radius: var(--rounded);
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-danger:hover {
+            background: var(--danger-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 120px);
+        }
+        
+        .toolbar {
+            width: 320px;
+            background-color: var(--light);
+            padding: 16px;
+            border-right: 1px solid #eee;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-section {
+            margin-bottom: 24px;
+            background: white;
+            padding: 16px;
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow);
+        }
+        
+        .tool-section h3 {
+            margin-bottom: 12px;
+            color: var(--secondary);
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .property-group {
+            margin-bottom: 16px;
+        }
+        
+        .property-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .property-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: var(--rounded);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .property-group input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+        
+        .dashboard {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: var(--rounded);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .data-section {
+            background: white;
+            border-radius: var(--rounded);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .data-section h2 {
+            margin-bottom: 20px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 16px;
+        }
+        
+        .tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .accounts-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #eee;
+            border-radius: var(--rounded);
+        }
+        
+        .account-item {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.2s ease;
+        }
+        
+        .account-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .account-item h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .account-item p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 4px;
+            display: flex;
+        }
+        
+        .account-item p strong {
+            min-width: 120px;
+            display: inline-block;
+            color: var(--dark);
+        }
+        
+        .referral-tree-container {
+            background: white;
+            padding: 20px;
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .tree-node {
+            margin-left: 20px;
+            padding: 8px 0;
+            position: relative;
+        }
+        
+        .tree-node:before {
+            content: "";
+            position: absolute;
+            left: -15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-light);
+        }
+        
+        .tree-node:after {
+            content: "";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            width: 15px;
+            height: 2px;
+            background: var(--primary-light);
+        }
+        
+        .tree-node:first-child:before {
+            top: 50%;
+        }
+        
+        .tree-node:last-child:before {
+            bottom: 50%;
+        }
+        
+        .tree-node-content {
+            background: #f5f7ff;
+            padding: 10px 15px;
+            border-radius: var(--rounded);
+            border: 1px solid #e0e5ff;
+            font-size: 0.85rem;
+        }
+        
+        .tree-node-content strong {
+            color: var(--primary-dark);
+        }
+        
+        .status-bar {
+            padding: 10px 16px;
+            background-color: var(--dark);
+            color: white;
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: var(--success);
+        }
+        
+        .notification.error {
+            background: var(--danger);
+        }
+        
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .toolbar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .app-container {
+                min-height: 100vh;
+                border-radius: 0;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-end;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="app-header">
+            <h1>Pro-PH</h1>
+            <div class="header-actions">
+                <button id="export-btn" class="btn btn-secondary">
+                    <i class="fas fa-download"></i> Exportar
+                </button>
+                <button id="clear-btn" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Limpiar
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="toolbar">
+                <div class="tool-section">
+                    <h3>Configuración de Generación</h3>
+                    <div class="property-group">
+                        <label for="referral-input">Código de Referencia</label>
+                        <input type="text" id="referral-input" placeholder="Ingresa código de referido" maxlength="8">
+                    </div>
+                    <div class="property-group">
+                        <label for="api-endpoint">Endpoint API</label>
+                        <input type="text" id="api-endpoint" placeholder="www.corporacionredneural.com" value="www.corporacionredneural.com">
+                    </div>
+                    <div class="property-group">
+                        <label for="speed-control">Velocidad (segundos)</label>
+                        <input type="range" id="speed-control" min="1" max="10" value="3">
+                        <span id="speed-value">3s</span>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="start-btn" class="btn btn-primary" style="flex: 1;">
+                            <i class="fas fa-play"></i> Iniciar
+                        </button>
+                        <button id="stop-btn" class="btn btn-secondary" style="flex: 1;" disabled>
+                            <i class="fas fa-stop"></i> Detener
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="tool-section">
+                    <h3>Tu Código de Referido</h3>
+                    <div class="property-group">
+                        <div style="
+                            background: var(--gradient-primary);
+                            color: white;
+                            padding: 15px;
+                            border-radius: var(--rounded);
+                            text-align: center;
+                            font-size: 1.2rem;
+                            font-weight: bold;
+                            letter-spacing: 1px;
+                        " id="referral-code">CARGANDO...</div>
+                    </div>
+                    <button id="copy-btn" class="btn btn-secondary" style="width: 100%;">
+                        <i class="fas fa-copy"></i> Copiar Código
+                    </button>
+                </div>
+            </div>
+            
+            <div class="dashboard">
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="value" id="total-accounts">0</div>
+                        <div class="label">pro ph</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="referral-count">0</div>
+                        <div class="label">Referidos Obtenidos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="generation-speed">0/s</div>
+                        <div class="label">Velocidad</div>
+                    </div>
+                </div>
+                
+                <div class="data-section">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="accounts">Cuentas Generadas</div>
+                        <div class="tab" data-tab="referrals">Árbol de Referidos</div>
+                        <div class="tab" data-tab="logs">Registro de Actividad</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="accounts-tab">
+                        <div class="accounts-list" id="accounts-list">
+                            <!-- Las cuentas aparecerán aquí -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="referrals-tab">
+                        <div class="referral-tree-container">
+                            <div id="tree-view">
+                                <p>Ingresa un código de referencia para ver cómo se entrelazan las cuentas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="logs-tab">
+                        <div class="accounts-list" id="activity-logs">
+                            <!-- Los logs aparecerán aquí -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div>Estado: <span id="status-message">Listo</span></div>
+            <div>Última actualización: <span id="last-update">Nunca</span></div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Variables globales
+        let isGenerating = false;
+        let generationInterval;
+        let accounts = [];
+        let referralCode = '';
+        let referralCount = 0;
+        let generationSpeed = 3000; // 3 segundos por defecto
+        let apiEndpoint = 'WWW.CORPORACIONREDNEURAL.COM';
+        let activityLogs = [];
+        let generationStats = {
+            success: 0,
+            errors: 0,
+            lastSuccess: null,
+            lastError: null
+        };
+        
+        // Elementos del DOM
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const accountsList = document.getElementById('accounts-list');
+        const referralInput = document.getElementById('referral-input');
+        const apiEndpointInput = document.getElementById('api-endpoint');
+        const speedControl = document.getElementById('speed-control');
+        const speedValue = document.getElementById('speed-value');
+        const treeView = document.getElementById('tree-view');
+        const totalAccountsEl = document.getElementById('total-accounts');
+        const referralCodeEl = document.getElementById('referral-code');
+        const referralCountEl = document.getElementById('referral-count');
+        const generationSpeedEl = document.getElementById('generation-speed');
+        const statusMessageEl = document.getElementById('status-message');
+        const lastUpdateEl = document.getElementById('last-update');
+        const notificationEl = document.getElementById('notification');
+        const activityLogsEl = document.getElementById('activity-logs');
+        
+        // Funciones de utilidad
+        function showNotification(message, type = 'info', duration = 3000) {
+            notificationEl.textContent = message;
+            notificationEl.className = 'notification';
+            notificationEl.classList.add(type, 'show');
+            
+            setTimeout(() => {
+                notificationEl.classList.remove('show');
+            }, duration);
+            
+            // Registrar en logs
+            logActivity(message, type);
+        }
+        
+        function logActivity(message, type = 'info') {
+            const timestamp = new Date().toLocaleString();
+            activityLogs.unshift({
+                message,
+                type,
+                timestamp
+            });
+            
+            // Limitar logs a 100
+            if (activityLogs.length > 100) {
+                activityLogs.pop();
+            }
+            
+            updateActivityLogsUI();
+        }
+        
+        function updateActivityLogsUI() {
+            activityLogsEl.innerHTML = activityLogs.map(log => `
+                <div class="account-item" style="border-left: 4px solid ${getLogColor(log.type)};">
+                    <p><strong>${log.timestamp}</strong> ${log.message}</p>
+                </div>
+            `).join('');
+        }
+        
+        function getLogColor(type) {
+            const colors = {
+                info: '#4361ee',
+                success: '#4cc9f0',
+                error: '#dc3545',
+                warning: '#ffc107'
+            };
+            return colors[type] || '#4361ee';
+        }
+        
+        function updateLastUpdateTime() {
+            lastUpdateEl.textContent = new Date().toLocaleString();
+        }
+        
+        // Inicializar desde localStorage
+        function initializeFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('sheinAccountGenerator');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    accounts = data.accounts || [];
+                    referralCode = data.referralCode || generateRandomCode();
+                    referralCount = data.referralCount || 0;
+                    apiEndpoint = data.apiEndpoint || 'WWW.CORPORACIONREDNEURAL.COM';
+                    generationSpeed = data.generationSpeed || 3000;
+                    
+                    // Actualizar UI
+                    totalAccountsEl.textContent = accounts.length;
+                    referralCodeEl.textContent = referralCode;
+                    referralCountEl.textContent = referralCount;
+                    apiEndpointInput.value = apiEndpoint;
+                    speedControl.value = generationSpeed / 1000;
+                    speedValue.textContent = `${generationSpeed / 1000}s`;
+                    
+                    // Cargar cuentas en la lista
+                    accounts.forEach(account => {
+                        addAccountToUI(account);
+                    });
+                    
+                    // Reconstruir árbol de referidos
+                    rebuildReferralTree();
+                    
+                    showNotification('Datos anteriores cargados correctamente', 'success');
+                } else {
+                    referralCode = generateRandomCode();
+                    referralCodeEl.textContent = referralCode;
+                    showNotification('Nueva sesión iniciada', 'info');
+                }
+            } catch (e) {
+                console.error('Error al cargar datos:', e);
+                showNotification('Error al cargar datos guardados', 'error');
+                referralCode = generateRandomCode();
+                referralCodeEl.textContent = referralCode;
+            }
+        }
+        
+        // Guardar en localStorage
+        function saveToLocalStorage() {
+            try {
+                const data = {
+                    accounts: accounts.slice(-500), // Limitar a 500 cuentas
+                    referralCode: referralCode,
+                    referralCount: referralCount,
+                    apiEndpoint: apiEndpoint,
+                    generationSpeed: generationSpeed,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('sheinAccountGenerator', JSON.stringify(data));
+                updateLastUpdateTime();
+            } catch (e) {
+                console.error('Error al guardar datos:', e);
+                showNotification('Error al guardar datos', 'error');
+            }
+        }
+        
+        // Generar un código aleatorio
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 8; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        // Validar código de referido
+        function isValidReferralCode(code) {
+            return /^[A-Z0-9]{8}$/.test(code);
+        }
+        
+        // Crear una nueva cuenta (con conexión API)
+        async function createAccount() {
+            const referral = referralInput.value || null;
+            
+            // Validar código de referido si se proporcionó
+            if (referral && !isValidReferralCode(referral)) {
+                showNotification('Código de referido inválido', 'error');
+                return;
+            }
+            
+            try {
+                statusMessageEl.textContent = 'Generando cuenta...';
+                
+                // Simular llamada a API (reemplazar con llamada real)
+                // const response = await fetch(apiEndpoint, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({
+                //         referralCode: referral,
+                //         requestCode: referralCode
+                //     })
+                // });
+                
+                // if (!response.ok) throw new Error('Error en la API');
+                // const newAccount = await response.json();
+                
+                // Simulación de respuesta de API
+                await new Promise(resolve => setTimeout(resolve, 500)); // Simular latencia
+                
+                const newAccount = {
+                    username: `user${Math.floor(1000 + Math.random() * 9000)}`,
+                    password: generateRandomCode(),
+                    referralCode: generateRandomCode(),
+                    usedReferral: referral,
+                    timestamp: new Date().toLocaleString(),
+                    status: 'success'
+                };
+                
+                accounts.push(newAccount);
+                addAccountToUI(newAccount);
+                saveToLocalStorage();
+                
+                // Si esta cuenta fue creada con nuestro código de referido, incrementar el contador
+                if (referral === referralCode) {
+                    referralCount++;
+                    referralCountEl.textContent = referralCount;
+                    showNotification(`¡Nuevo referido obtenido! (Total: ${referralCount})`, 'success');
+                }
+                
+                totalAccountsEl.textContent = accounts.length;
+                generationStats.success++;
+                generationStats.lastSuccess = new Date();
+                statusMessageEl.textContent = 'Cuenta generada correctamente';
+                logActivity(`Cuenta generada: ${newAccount.username}`, 'success');
+                
+                // Actualizar velocidad de generación
+                updateGenerationSpeed();
+                
+            } catch (error) {
+                console.error('Error al crear cuenta:', error);
+                statusMessageEl.textContent = 'Error al generar cuenta';
+                generationStats.errors++;
+                generationStats.lastError = new Date();
+                logActivity(`Error al generar cuenta: ${error.message}`, 'error');
+                showNotification('Error al generar cuenta', 'error');
+            }
+        }
+        
+        function updateGenerationSpeed() {
+            // Calcular velocidad basada en el tiempo entre generaciones
+            if (generationStats.lastSuccess && generationStats.success > 1) {
+                const now = new Date();
+                const elapsed = (now - generationStats.lastSuccess) / 1000;
+                const speed = 1 / elapsed;
+                generationSpeedEl.textContent = speed.toFixed(2) + '/s';
+            }
+        }
+        
+        // Agregar cuenta a la UI
+        function addAccountToUI(account) {
+            const accountItem = document.createElement('div');
+            accountItem.className = 'account-item';
+            accountItem.innerHTML = `
+                <h3>${account.username}</h3>
+                <p><strong>Contraseña:</strong> ${account.password}</p>
+                <p><strong>Código de Referido:</strong> ${account.referralCode}</p>
+                <p><strong>Referido usado:</strong> ${account.usedReferral || 'Ninguno'}</p>
+                <p><strong>Creado:</strong> ${account.timestamp}</p>
+                <p><strong>Estado:</strong> <span style="color: ${account.status === 'success' ? 'green' : 'red'}">${account.status === 'success' ? 'Éxito' : 'Error'}</span></p>
+            `;
+            accountsList.insertBefore(accountItem, accountsList.firstChild);
+            
+            // Actualizar el árbol de referidos si corresponde
+            if (account.usedReferral) {
+                updateReferralTree(account);
+            }
+        }
+        
+        // Reconstruir árbol de referidos completo
+        function rebuildReferralTree() {
+            // Limpiar árbol
+            treeView.innerHTML = '<h3>Árbol de Referidos</h3>';
+            
+            // Agrupar cuentas por referido usado
+            const referralMap = {};
+            accounts.forEach(account => {
+                if (account.usedReferral) {
+                    if (!referralMap[account.usedReferral]) {
+                        referralMap[account.usedReferral] = [];
+                    }
+                    referralMap[account.usedReferral].push(account);
+                }
+            });
+            
+            // Función recursiva para construir el árbol
+            const buildTree = (referral, parentElement) => {
+                if (referralMap[referral]) {
+                    referralMap[referral].forEach(account => {
+                        const node = document.createElement('div');
+                        node.className = 'tree-node';
+                        node.dataset.code = account.referralCode;
+                        
+                        const nodeContent = document.createElement('div');
+                        nodeContent.className = 'tree-node-content';
+                        nodeContent.innerHTML = `
+                            <strong>${account.username}</strong> (${account.referralCode})<br>
+                            <small>${account.timestamp}</small>
+                        `;
+                        
+                        node.appendChild(nodeContent);
+                        parentElement.appendChild(node);
+                        
+                        // Construir subárbol
+                        buildTree(account.referralCode, node);
+                    });
+                }
+            };
+            
+            // Construir desde el código de referencia principal (si existe)
+            const mainReferral = referralInput.value || referralCode;
+            if (mainReferral && referralMap[mainReferral]) {
+                buildTree(mainReferral, treeView);
+            } else if (accounts.length > 0) {
+                treeView.innerHTML += '<p>Ingresa un código de referencia para ver el árbol de referidos.</p>';
+            }
+        }
+        
+        // Actualizar el árbol de referidos
+        function updateReferralTree(account) {
+            // Si el árbol está vacío o solo tiene el mensaje inicial
+            if (treeView.children.length === 1 && treeView.children[0].tagName === 'P') {
+                treeView.innerHTML = '<h3>Árbol de Referidos</h3>';
+            }
+            
+            // Buscar si el referido ya está en el árbol
+            let found = false;
+            const walkTree = (node, parentCode, depth = 0) => {
+                if (node.dataset && node.dataset.code === account.usedReferral) {
+                    found = true;
+                    const newNode = document.createElement('div');
+                    newNode.className = 'tree-node';
+                    newNode.dataset.code = account.referralCode;
+                    
+                    const nodeContent = document.createElement('div');
+                    nodeContent.className = 'tree-node-content';
+                    nodeContent.innerHTML = `
+                        <strong>${account.username}</strong> (${account.referralCode})<br>
+                        <small>${account.timestamp}</small>
+                    `;
+                    
+                    newNode.appendChild(nodeContent);
+                    node.appendChild(newNode);
+                } else if (node.children) {
+                    for (let child of node.children) {
+                        if (child.classList && child.classList.contains('tree-node')) {
+                            walkTree(child, parentCode, depth + 1);
+                        }
+                    }
+                }
+            };
+            
+            // Buscar en todo el árbol
+            walkTree(treeView);
+            
+            // Si no se encontró y es el código de referencia principal, agregarlo al inicio
+            if (!found && account.usedReferral === (referralInput.value || referralCode)) {
+                const newNode = document.createElement('div');
+                newNode.className = 'tree-node';
+                newNode.dataset.code = account.referralCode;
+                
+                const nodeContent = document.createElement('div');
+                nodeContent.className = 'tree-node-content';
+                nodeContent.innerHTML = `
+                    <strong>${account.username}</strong> (${account.referralCode})<br>
+                    <small>${account.timestamp}</small>
+                `;
+                
+                newNode.appendChild(nodeContent);
+                treeView.appendChild(newNode);
+            }
+        }
+        
+        // Exportar cuentas a un archivo
+        function exportAccounts() {
+            try {
+                const data = accounts.map(acc => 
+                    `Usuario: ${acc.username}\nContraseña: ${acc.password}\nCódigo Referido: ${acc.referralCode}\nReferido Usado: ${acc.usedReferral || 'Ninguno'}\nFecha: ${acc.timestamp}\n\n`
+                ).join('\n');
+                
+                const blob = new Blob([data], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `cuentas_shein_${new Date().toISOString().slice(0,10)}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('Cuentas exportadas correctamente', 'success');
+                logActivity('Cuentas exportadas a archivo', 'info');
+            } catch (e) {
+                console.error('Error al exportar:', e);
+                showNotification('Error al exportar cuentas', 'error');
+                logActivity('Error al exportar cuentas', 'error');
+            }
+        }
+        
+        // Limpiar todos los datos
+        function clearAllData() {
+            if (confirm('¿Estás seguro de que quieres borrar TODOS los datos? Esto no se puede deshacer.')) {
+                accounts = [];
+                referralCount = 0;
+                activityLogs = [];
+                generationStats = {
+                    success: 0,
+                    errors: 0,
+                    lastSuccess: null,
+                    lastError: null
+                };
+                
+                totalAccountsEl.textContent = '0';
+                referralCountEl.textContent = '0';
+                generationSpeedEl.textContent = '0/s';
+                accountsList.innerHTML = '';
+                treeView.innerHTML = '<p>Ingresa un código de referencia para ver cómo se entrelazan las cuentas.</p>';
+                activityLogsEl.innerHTML = '';
+                localStorage.removeItem('sheinAccountGenerator');
+                updateLastUpdateTime();
+                
+                // Reiniciar generación si estaba activa
+                if (isGenerating) {
+                    clearInterval(generationInterval);
+                    isGenerating = false;
+                    startBtn.disabled = false;
+                    stopBtn.disabled = true;
+                    statusMessageEl.textContent = 'Generación detenida - Datos limpiados';
+                }
+                
+                showNotification('Todos los datos han sido limpiados', 'success');
+                logActivity('Todos los datos han sido limpiados', 'warning');
+            }
+        }
+        
+        // Manejar cambio de pestañas
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remover clase active de todas las pestañas y contenidos
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Agregar clase active a la pestaña clickeada
+                    tab.classList.add('active');
+                    
+                    // Mostrar el contenido correspondiente
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+        }
+        
+        // Event listeners
+        startBtn.addEventListener('click', () => {
+            isGenerating = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            statusMessageEl.textContent = 'Generando cuentas...';
+            
+            // Actualizar configuración
+            apiEndpoint = apiEndpointInput.value;
+            generationSpeed = speedControl.value * 1000;
+            
+            // Crear una cuenta inmediatamente
+            createAccount();
+            
+            // Configurar el intervalo para crear cuentas
+            generationInterval = setInterval(createAccount, generationSpeed);
+            
+            showNotification('Generación de cuentas iniciada', 'success');
+            logActivity('Generación de cuentas iniciada', 'info');
+        });
+        
+        stopBtn.addEventListener('click', () => {
+            isGenerating = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            clearInterval(generationInterval);
+            statusMessageEl.textContent = 'Generación detenida';
+            
+            showNotification('Generación de cuentas detenida', 'warning');
+            logActivity('Generación de cuentas detenida', 'info');
+        });
+        
+        exportBtn.addEventListener('click', exportAccounts);
+        clearBtn.addEventListener('click', clearAllData);
+        
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(referralCode)
+                .then(() => {
+                    showNotification('Código copiado al portapapeles', 'success');
+                })
+                .catch(err => {
+                    showNotification('Error al copiar el código', 'error');
+                    console.error('Error al copiar:', err);
+                });
+        });
+        
+        // Cuando cambia el código de referido, reconstruir el árbol
+        referralInput.addEventListener('change', rebuildReferralTree);
+        
+        // Control de velocidad
+        speedControl.addEventListener('input', () => {
+            generationSpeed = speedControl.value * 1000;
+            speedValue.textContent = `${speedControl.value}s`;
+            
+            // Si está generando, reiniciar el intervalo con la nueva velocidad
+            if (isGenerating) {
+                clearInterval(generationInterval);
+                generationInterval = setInterval(createAccount, generationSpeed);
+            }
+        });
+        
+        // Inicializar al cargar la página
+        window.addEventListener('load', () => {
+            initializeFromLocalStorage();
+            setupTabs();
+            updateLastUpdateTime();
+        });
+    </script>
+</body>
+</html>
