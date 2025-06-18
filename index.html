@@ -687,9 +687,10 @@
             return code;
         }
         
-        // Validar código unificado
+        // Validar código unificado - ahora más flexible
         function isValidUnifiedCode(code) {
-            return /^[A-Z2-9]{8,14}$/.test(code);
+            // Permitir cualquier código entre 1 y 14 caracteres alfanuméricos
+            return /^[A-Za-z0-9]{1,14}$/.test(code);
         }
         
         // Inicializar desde localStorage
@@ -755,13 +756,7 @@
         
         // Crear una nueva cuenta (con conexión API)
         async function createAccount() {
-            const referral = referralInput.value || null;
-            
-            // Validar código de referido si se proporcionó
-            if (referral && !isValidUnifiedCode(referral)) {
-                showNotification('Código de referido inválido (8-14 caracteres A-Z,2-9)', 'error');
-                return;
-            }
+            const referral = referralInput.value.trim() || referralCode; // Usar el código de entrada o el generado
             
             try {
                 statusMessageEl.textContent = 'Generando cuenta...';
@@ -879,7 +874,7 @@
             };
             
             // Construir desde el código de referencia principal (si existe)
-            const mainReferral = referralInput.value || referralCode;
+            const mainReferral = referralInput.value.trim() || referralCode;
             if (mainReferral && referralMap[mainReferral]) {
                 buildTree(mainReferral, treeView);
             } else if (accounts.length > 0) {
@@ -925,7 +920,7 @@
             walkTree(treeView);
             
             // Si no se encontró y es el código de referencia principal, agregarlo al inicio
-            if (!found && account.usedReferral === (referralInput.value || referralCode)) {
+            if (!found && account.usedReferral === (referralInput.value.trim() || referralCode)) {
                 const newNode = document.createElement('div');
                 newNode.className = 'tree-node';
                 newNode.dataset.code = account.referralCode;
@@ -1070,7 +1065,7 @@
         });
         
         // Cuando cambia el código de referido, reconstruir el árbol
-        referralInput.addEventListener('change', rebuildReferralTree);
+        referralInput.addEventListener('input', rebuildReferralTree);
         
         // Control de velocidad
         speedControl.addEventListener('input', () => {
